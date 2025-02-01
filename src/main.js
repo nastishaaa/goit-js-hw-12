@@ -43,6 +43,13 @@ btn.addEventListener('click', ev => {
     }
 });
 
+const lightbox = new SimpleLightbox('.list a', { 
+    captions: true, 
+    captionsData: 'alt', 
+    captionDelay: 250, 
+    animationSlide: true, 
+});
+
 btnMore.addEventListener('click', async () => {
     page += 1; 
     try {
@@ -52,7 +59,8 @@ btnMore.addEventListener('click', async () => {
 
         const markup = renderImages(response.hits);
         list.insertAdjacentHTML('beforeend', markup);
-
+        setTimeout(() => lightbox.refresh(), 100);
+        
         const firstCard = document.querySelector('.list li'); 
         if (firstCard) {
             const cardHeight = firstCard.getBoundingClientRect().height;
@@ -72,13 +80,7 @@ btnMore.addEventListener('click', async () => {
         } else {
             btnMore.style.display = ''; 
         }
-        const lightbox = new SimpleLightbox('.list a', { 
-            captions: true, 
-            captionsData: 'alt', 
-            captionDelay: 250, 
-            animationSlide: true, 
-        });
-        lightbox.refresh(); 
+        
     } catch (error) {
         btnMore.style.display = 'none';
         console.log(error);

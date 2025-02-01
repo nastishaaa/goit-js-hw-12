@@ -37,7 +37,7 @@ export async function findMyFetch(query, page = 1, limit = 20, append = false) {
                 timeout: 5000, 
                 position: 'topRight',
             });
-            return;
+            return
         } else {
             const markup = renderImages(data.hits);
             if (append) {
