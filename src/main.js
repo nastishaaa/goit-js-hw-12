@@ -59,7 +59,7 @@ btnMore.addEventListener('click', async () => {
 
         const markup = renderImages(response.hits);
         list.insertAdjacentHTML('beforeend', markup);
-        setTimeout(() => lightbox.refresh(), 100);
+        setTimeout(() => lightbox.refresh(), 300);
         
         const firstCard = document.querySelector('.list li'); 
         if (firstCard) {

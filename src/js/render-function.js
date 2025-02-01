@@ -10,7 +10,7 @@ export function imgTemplate(img) {
     <li class='elem-list'>
         <div class="gallery">
             <a href="${img.largeImageURL}">
-                <img src="${img.webformatURL}" alt="${img.tags}" title="${img.tags}" class='image'/>
+                <img src="${img.webformatURL}" loading="lazy" alt="${img.tags}" title="${img.tags}" class='image'/>
             </a>
             <div class="image-info">
                 <p><strong>Likes:</strong> ${img.likes}</p>
