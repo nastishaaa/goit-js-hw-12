@@ -10,7 +10,7 @@ const list = document.querySelector('.list');
 const btnMore = document.querySelector('.btn-more');
 
 let page = 1;
-let limit = 20;
+let limit = 15;
 btnMore.style.display = 'none';
 if (loader) loader.style.display = 'none';
 
@@ -52,8 +52,8 @@ export async function findMyFetch(query, page = 1, limit = 20, append = false) {
                 captionDelay: 250, 
                 animationSlide: true, 
             });
-            btnMore.style.display = '';
             lightbox.refresh();
+            btnMore.style.display = '';
         }
 
         return data;

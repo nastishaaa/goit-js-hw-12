@@ -2,7 +2,6 @@ import iziToast from "izitoast";
 import "izitoast/dist/css/iziToast.min.css";
 import SimpleLightbox from "simplelightbox";
 import "simplelightbox/dist/simple-lightbox.min.css";
-import axios from 'axios';
 import { findMyFetch } from './js/pixabay-api.js';
 import { renderImages } from './js/render-function.js';
 
@@ -16,7 +15,7 @@ btnMore.style.display = 'none';
 
 loader.style.display = 'none';
 let page = 1;
-let limit = 20;
+let limit = 15;
 
 let val = '';
 
@@ -30,7 +29,7 @@ input.addEventListener('input', ev =>{
 btn.addEventListener('click', ev => {
     ev.preventDefault();
     page = 1;
-    if(val.length === 0 || val.trim() === ''){
+    if(!val || val.trim() === ''){
         list.innerHTML = '';
         return iziToast.error({
             message: "Sorry, there are no images matching your search query. Please try again!",
@@ -41,6 +40,7 @@ btn.addEventListener('click', ev => {
         list.innerHTML = '';
         findMyFetch(val, page, limit);
     }
+    
 });
 
 const lightbox = new SimpleLightbox('.list a', { 
@@ -53,13 +53,13 @@ const lightbox = new SimpleLightbox('.list a', {
 btnMore.addEventListener('click', async () => {
     page += 1; 
     try {
-        if(loader) loader.style.display = '';
+        loader.style.display = '';
         const response = await findMyFetch(val, page, limit, true);
-        if (loader) loader.style.display = 'none'; 
+        loader.style.display = 'none'; 
 
         const markup = renderImages(response.hits);
         list.insertAdjacentHTML('beforeend', markup);
-        setTimeout(() => lightbox.refresh(), 300);
+        lightbox.refresh();
         
         const firstCard = document.querySelector('.list li'); 
         if (firstCard) {
