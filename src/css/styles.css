@@ -80,7 +80,14 @@ img {
   align-content: flex-start;
   flex-wrap: wrap;
   gap: 24px;
+  overflow-x: hidden;
+  margin-bottom: 15px;
 }
+
+.list img {
+  display: block;
+}
+
 
 .gallery{
   width: 360px; 

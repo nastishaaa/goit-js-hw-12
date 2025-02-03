@@ -30,7 +30,7 @@ export async function findMyFetch(query, page = 1, limit = 20, append = false) {
         if (loader) loader.style.display = 'none';
 
         if (!data.hits || data.hits.length === 0) {
-            list.innerHTML = '';
+            // list.innerHTML = '';
             btnMore.style.display = 'none';
             iziToast.error({
                 message: "Sorry, there are no images matching your search query. Please try again!",
