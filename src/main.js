@@ -18,6 +18,7 @@ let page = 1;
 let limit = 15;
 let val = '';
 
+
 input.addEventListener('input', ev =>{
     val = ev.target.value;
     if(val.trim() === ''){
@@ -29,56 +30,46 @@ btn.addEventListener('click', async (ev) => {
     ev.preventDefault();
     
     page = 1;
-    if(page === 1){
-        btnMore.style.display = 'none';
-    }
-
+    btnMore.style.display = 'none';
     list.innerHTML = '';
-    if(!val || val.trim() === ''){
+    val = input.value.trim();
+
+    if (!val) {
         return iziToast.error({
             message: "Sorry, there are no images matching your search query. Please try again!",
-            timeout: 5000, 
+            timeout: 5000,
             position: 'topRight',
-        })
+        });
+    }
 
-    } else {
-        try {
-            loader.style.display = '';
-            const response = await findMyFetch(val, page, limit);
-            loader.style.display = 'none';
+    try {
+        loader.style.display = '';
+        const response = await findMyFetch(val, page, limit);
+        loader.style.display = 'none';
 
-            if (!response.hits || response.hits.length === 0) {
-                return iziToast.error({
-                    message: "Sorry, there are no images matching your search query. Please try again!",
-                    timeout: 5000,
-                    position: 'topRight',
-                });
-            }
-
-            list.innerHTML = renderImages(response.hits);
-            let newLightbox = new SimpleLightbox('.list a', { 
-                captions: true, 
-                captionsData: 'alt', 
-                captionDelay: 250, 
-                animationSlide: true,
+        if (!response.hits || response.hits.length === 0) {
+            return iziToast.error({
+                message: "Sorry, there are no images matching your search query. Please try again!",
+                timeout: 5000,
+                position: 'topRight',
             });
-            newLightbox.refresh();
-
-            const totalPages = Math.ceil(response.totalHits / limit);
-            if (page >= totalPages) {
-                btnMore.style.display = 'none';
-                iziToast.info({
-                    position: "topRight",
-                    message: "You've reached the end of the results",
-                });
-            } else {
-                btnMore.style.display = '';
-            }
-
-        } catch (error) {
-            loader.style.display = 'none';
-            return;
         }
+
+        list.innerHTML = renderImages(response.hits);
+
+        const lightbox = new SimpleLightbox('.list a', { 
+            captions: true, 
+            captionsData: 'alt', 
+            captionDelay: 250, 
+            animationSlide: true,
+        });
+
+        const totalPages = Math.ceil(response.totalHits / limit);
+        btnMore.style.display = totalPages > 1 ? '' : 'none';
+
+    } catch (error) {
+        loader.style.display = 'none';
+        console.error(error);
     }
 });
 
@@ -86,7 +77,6 @@ btnMore.addEventListener('click', async () => {
     page += 1;
     const firstCard = document.querySelector('.list li'); 
     const cardHeight = firstCard.getBoundingClientRect().height;
-    loader.style.display = '';
     
     setTimeout(() => {
         window.scrollBy({
@@ -96,20 +86,20 @@ btnMore.addEventListener('click', async () => {
     }, 100);
 
     try {
+        loader.style.display = '';
         const response = await findMyFetch(val, page, limit, true);
         loader.style.display = 'none'; 
 
-        // const markup = renderImages(response.hits);
-        // list.insertAdjacentHTML('beforeend', markup);
-        let newLightbox = new SimpleLightbox('.list a', { 
+        const lightbox = new SimpleLightbox('.list a', { 
             captions: true, 
             captionsData: 'alt', 
             captionDelay: 250, 
             animationSlide: true,
         });
-        newLightbox.refresh();
+        lightbox.refresh();
 
         if (firstCard) {
+            const cardHeight = firstCard.getBoundingClientRect().height;
             window.scrollBy({
                 top: cardHeight * 2,
                 behavior: 'smooth'

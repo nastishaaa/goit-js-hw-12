@@ -184,6 +184,7 @@ li{
   justify-content: center;
   align-items: flex-start;
   margin-top: 16px;
+  overflow-x: hidden;
 }
 
 .loader {
