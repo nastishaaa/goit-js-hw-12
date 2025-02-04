@@ -96,6 +96,7 @@ btnMore.addEventListener('click', async () => {
 
     try {
         loader.style.display = '';
+        btnMore.style.display = 'none';
         const response = await findMyFetch(val, page, limit, true);
         loader.style.display = 'none'; 
 
