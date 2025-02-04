@@ -84,22 +84,14 @@ btn.addEventListener('click', async (ev) => {
 
 btnMore.addEventListener('click', async () => {
     page += 1;
-    const firstCard = document.querySelector('.list li'); 
-    const cardHeight = firstCard.getBoundingClientRect().height;
     
-    requestAnimationFrame(() => {
-        window.scrollBy({
-            top: cardHeight * 2,
-            behavior: 'smooth'
-        });
-    });
+    loader.style.display = ''; 
+    btnMore.style.display = 'none';
 
     try {
-        loader.style.display = '';
-        btnMore.style.display = 'none';
         const response = await findMyFetch(val, page, limit, true);
+        
         loader.style.display = 'none'; 
-
         let newLightbox = new SimpleLightbox('.list a', { 
             captions: true, 
             captionsData: 'alt', 
@@ -107,16 +99,15 @@ btnMore.addEventListener('click', async () => {
             animationSlide: true,
         });
         newLightbox.refresh();
-
+        const firstCard = document.querySelector('.list li');
         if (firstCard) {
-            const cardHeight = firstCard.getBoundingClientRect().height;
+            const cardHeight = firstCard.getBoundingClientRect().height; // Один раз визначаємо висоту
             requestAnimationFrame(() => {
                 window.scrollBy({
                     top: cardHeight * 2,
                     behavior: 'smooth'
                 });
             });
-        
         }
 
         const totalPages = Math.ceil(response.totalHits / limit);
@@ -131,7 +122,8 @@ btnMore.addEventListener('click', async () => {
         }
         
     } catch (error) {
+        loader.style.display = 'none';
         btnMore.style.display = 'none';
         console.log(error);
     }
-});  
+});
