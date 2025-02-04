@@ -92,12 +92,14 @@ btnMore.addEventListener('click', async () => {
         const response = await findMyFetch(val, page, limit, true);
         
         loader.style.display = 'none'; 
+        
         let newLightbox = new SimpleLightbox('.list a', { 
             captions: true, 
             captionsData: 'alt', 
             captionDelay: 250, 
             animationSlide: true,
         });
+        
         newLightbox.refresh();
         const firstCard = document.querySelector('.list li');
         if (firstCard) {
@@ -127,3 +129,4 @@ btnMore.addEventListener('click', async () => {
         console.log(error);
     }
 });
+
