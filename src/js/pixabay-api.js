@@ -30,7 +30,6 @@ export async function findMyFetch(query, page = 1, limit = 20, append = false) {
         if (loader) loader.style.display = 'none';
 
         if (!data.hits || data.hits.length === 0) {
-            // list.innerHTML = '';
             btnMore.style.display = 'none';
             iziToast.error({
                 message: "Sorry, there are no images matching your search query. Please try again!",
@@ -46,13 +45,6 @@ export async function findMyFetch(query, page = 1, limit = 20, append = false) {
                 list.innerHTML = markup;
             }
 
-            const lightbox = new SimpleLightbox('.list a', { 
-                captions: true, 
-                captionsData: 'alt', 
-                captionDelay: 250, 
-                animationSlide: true, 
-            });
-            lightbox.refresh();
             btnMore.style.display = '';
         }
 

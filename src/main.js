@@ -18,8 +18,6 @@ let page = 1;
 let limit = 15;
 let val = '';
 
-
-
 input.addEventListener('input', ev =>{
     val = ev.target.value;
     if(val.trim() === ''){
@@ -34,8 +32,7 @@ btn.addEventListener('click', async (ev) => {
     if(page === 1){
         btnMore.style.display = 'none';
     }
-
-    list.innerHTML = '';
+    
     val = input.value.trim();
     if(!val || val.trim() === ''){
         return iziToast.error({
@@ -44,7 +41,7 @@ btn.addEventListener('click', async (ev) => {
             position: 'topRight',
         })
 
-    } else {
+    } list.innerHTML = '';
         try {
             loader.style.display = '';
             const response = await findMyFetch(val, page, limit);
@@ -79,7 +76,7 @@ btn.addEventListener('click', async (ev) => {
             loader.style.display = 'none';
             return;
         }
-    }
+
 });
 
 btnMore.addEventListener('click', async () => {
