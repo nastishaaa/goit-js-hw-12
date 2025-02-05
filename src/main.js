@@ -97,10 +97,10 @@ btnMore.addEventListener('click', async () => {
         if (firstCard) {
             const cardHeight = firstCard.getBoundingClientRect().height; // Один раз визначаємо висоту
 
-                window.scrollBy({
-                    top: cardHeight * 2,
-                    behavior: 'smooth'
-                });
+            window.scrollBy({
+                top: cardHeight * 2,
+                behavior: 'smooth'
+            });
         }
 
         const totalPages = Math.ceil(response.totalHits / limit);
@@ -117,7 +117,6 @@ btnMore.addEventListener('click', async () => {
     } catch (error) {
         loader.style.display = 'none';
         btnMore.style.display = 'none';
-        console.log(error);
     }
 });
 
