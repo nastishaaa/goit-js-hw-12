@@ -18,6 +18,13 @@ let page = 1;
 let limit = 15;
 let val = '';
 
+let newLightbox = new SimpleLightbox('.list a', { 
+    captions: true, 
+    captionsData: 'alt', 
+    captionDelay: 250, 
+    animationSlide: true,
+});
+
 input.addEventListener('input', ev =>{
     val = ev.target.value;
     if(val.trim() === ''){
@@ -56,12 +63,6 @@ btn.addEventListener('click', async (ev) => {
             }
 
             list.innerHTML = renderImages(response.hits);
-            let newLightbox = new SimpleLightbox('.list a', { 
-                captions: true, 
-                captionsData: 'alt', 
-                captionDelay: 250, 
-                animationSlide: true,
-            });
             newLightbox.refresh();
 
             const totalPages = Math.ceil(response.totalHits / limit);
@@ -90,23 +91,16 @@ btnMore.addEventListener('click', async () => {
         
         loader.style.display = 'none'; 
         
-        let newLightbox = new SimpleLightbox('.list a', { 
-            captions: true, 
-            captionsData: 'alt', 
-            captionDelay: 250, 
-            animationSlide: true,
-        });
-        
         newLightbox.refresh();
+        
         const firstCard = document.querySelector('.list li');
         if (firstCard) {
             const cardHeight = firstCard.getBoundingClientRect().height; // Один раз визначаємо висоту
-            requestAnimationFrame(() => {
+
                 window.scrollBy({
                     top: cardHeight * 2,
                     behavior: 'smooth'
                 });
-            });
         }
 
         const totalPages = Math.ceil(response.totalHits / limit);
